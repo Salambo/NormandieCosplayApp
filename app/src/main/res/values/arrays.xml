@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string-array name="listeEve">
+            <item>Gruchet Geek Convention</item>
+            <item>Sommergeeks 4</item>
+            <item>Geek Days Rouen</item>
+            <item>Geekorama 2</item>
+        </string-array>
+    </resources>
