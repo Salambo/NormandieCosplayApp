@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 
 /**
@@ -28,7 +32,7 @@ public class ListeEve extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private Button btnajoutevenements;
-    private CursorAdapter liste;
+    private ListView liste;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -88,8 +92,24 @@ public class ListeEve extends Fragment {
 
                                               }
         );
-        /*liste = vue.findViewById(R.id.ListeEve);*/
+        liste = vue.findViewById(R.id.ListeEve);
         return vue;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SQLiteDatabase db = new Base(getActivity()).getReadableDatabase();
+
+        Cursor curseur=db.rawQuery("select id_eve as _id, * from Evenement;", new String[0]);
+        SimpleCursorAdapter tmp = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, curseur,
+                new String[]{
+                        "nom_eve"
+                },
+                new int[]{
+                        android.R.id.text1
+                });
+        liste.setAdapter(tmp);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -108,6 +128,8 @@ public class ListeEve extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }*/
+
+
     }
 
     @Override

@@ -1,12 +1,22 @@
 package com.normandiecosplay.normandiecosplayapp;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment; /*Penser à enlever le support.v4 pour les fragments*/
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import static com.normandiecosplay.normandiecosplayapp.AjoutEvenement.PARAM_SOURCE;
 
 
 /**
@@ -22,6 +32,9 @@ public class AjoutEve extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button btnajoutevenement;
+    private String nomNewEvenement;
+    private EditText texte;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,8 +77,44 @@ public class AjoutEve extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ajout_eve, container, false);
+        View vue = inflater.inflate(R.layout.fragment_ajout_eve, container, false);
+        btnajoutevenement = vue.findViewById(R.id.button33);
+        texte = (EditText) vue.findViewById(R.id.nomEve);
+        btnajoutevenement.setOnClickListener(new View.OnClickListener() {
+
+
+                                                  public void onClick(View view) {
+                                                      SQLiteDatabase db = new Base(getActivity()).getWritableDatabase();
+                                                      nomNewEvenement=(texte.getText()).toString();
+
+                                                      if(!nomNewEvenement.isEmpty()){
+                                                          try {
+                                                              db.execSQL("insert into Evenement (nom_eve) values ('nomNewEvenement');", new String[0]);
+                                                              //db.rawQuery("insert into Evenement (nom_eve) values ('nomNewEvenement');", new String[0]);
+                                                          } catch (Throwable t) {
+                                                              t.printStackTrace();
+                                                          }
+                                                          FragmentManager fragmentManager = getFragmentManager();
+                                                          FragmentTransaction fragmentTransaction =
+                                                                  fragmentManager.beginTransaction();
+                                                          fragmentTransaction.replace(R.id.calque, new ListeEve());
+                                                          fragmentTransaction.commit();
+                                                      }
+                                                      else{
+                                                          Toast.makeText(getActivity(), "Marty, il faut remplir le champ!",Toast.LENGTH_LONG).show();
+                                                      }
+
+                                                  }
+
+
+                                              }
+        );
+
+        return vue;
     }
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

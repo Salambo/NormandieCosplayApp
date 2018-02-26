@@ -11,25 +11,30 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Base extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "base.sqlite";
-    private static final int VERSION = 1;
+    private static final int VERSION = 3;
     public Base(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("Create table Evenement " +
-                "(" +
-                "id_eve int," +
-                "nom_eve varchar2," +
-                "lieu_eve varchar2," +
-                "ville_eve varchar2," +
-                "dateD date," +
-                "dateF date," +
-                "CC int );");
-
+        try {
+            db.execSQL("Create table Evenement " +
+                    "(" +
+                    "id_eve INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "nom_eve TEXT," +
+                    "lieu_eve TEXT," +
+                    "ville_eve TEXT," +
+                    "dateD TEXT," +
+                    "dateF TEXT," +
+                    "CC INTEGER );");
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(1);
+        }
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,
                           int newVersion) {
+        db.execSQL("insert into Evenement (nom_eve) values ('Sommergeeks'),('Geek Days');");
     }
 }
