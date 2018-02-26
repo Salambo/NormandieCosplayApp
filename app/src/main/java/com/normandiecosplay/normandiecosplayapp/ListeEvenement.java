@@ -1,6 +1,7 @@
 package com.normandiecosplay.normandiecosplayapp;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ public class ListeEvenement extends Activity {
                 // result recu
         }
     }
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_evenement);
