@@ -103,6 +103,7 @@ public class Menu extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_manage) {
+            startActivity(new Intent(Menu.this, TestCompteARebours.class));
 
 
         } else if (id == R.id.nav_share) {
