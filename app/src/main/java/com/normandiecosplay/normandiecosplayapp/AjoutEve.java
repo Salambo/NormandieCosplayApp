@@ -89,7 +89,7 @@ public class AjoutEve extends Fragment {
 
                                                       if(!nomNewEvenement.isEmpty()){
                                                           try {
-                                                              db.execSQL("insert into Evenement (nom_eve) values ('nomNewEvenement');", new String[0]);
+                                                              db.execSQL("insert into Evenement (nom_eve) values (?);", new String[]{nomNewEvenement});
                                                               //db.rawQuery("insert into Evenement (nom_eve) values ('nomNewEvenement');", new String[0]);
                                                           } catch (Throwable t) {
                                                               t.printStackTrace();
